@@ -7,6 +7,7 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
+        
         <FileUpload />
        <Link href="/users" style={{fontWeight:"bold", fontSize:"20px"}}>View Users</Link>
        <Link href="/adduser" style={{fontWeight:"bold", fontSize:"20px", marginLeft:"20px"}}>Add User</Link>

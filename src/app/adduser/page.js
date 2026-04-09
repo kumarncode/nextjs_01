@@ -2,8 +2,11 @@
 import { useState } from 'react';
 import API_BASE_URL from '../utils/config';
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../redux/slice';
 
 export default function AddUserPage({ user }) {
+    const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         ...(user && { _id: user?._id || '' }),
         name: user?.name || '',
@@ -25,6 +28,7 @@ export default function AddUserPage({ user }) {
         e.preventDefault();
         setLoading(true);
         setMessage('');
+        dispatch(addUser(formData)); // Update Redux store immediately
       // console.log("formData", formData);
         try {
             const url = user ? `${API_BASE_URL.TOMCAT_URL}/users/${formData._id}` : `${API_BASE_URL.TOMCAT_URL}/users`;
@@ -62,6 +66,8 @@ export default function AddUserPage({ user }) {
     return (
         <div className="main p-6 max-w-md mx-auto">
             <Link href="/users" className='link my-2'>Back to Users</Link>    
+            &nbsp; | &nbsp;
+            <Link href="/" className='link my-2'>Back to Home</Link>    
             <h1 style={{margin:"20px 0px"}}>Add User</h1>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <input
@@ -100,6 +106,8 @@ export default function AddUserPage({ user }) {
                 </button>
             </form>
             {message && <p className="mt-4 text-center text-sm">{message}</p>}
+
+           
         </div>
     );
 }
